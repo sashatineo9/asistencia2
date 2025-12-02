@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador - Sistema de Asistencia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+        }
+        
+        header {
+            background: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-left h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .header-left p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-info .name {
+            font-weight: 600;
+        }
+        
+        .user-info .role {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn-logout {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .btn-logout:hover {
+            background: #b91c1c;
+        }
+        
+        nav {
+            background: white;
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+        
+        .nav-tab:hover {
+            color: #111827;
+            background: #f9fafb;
+        }
+        
+        .nav-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+        
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+        }
+        
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+        
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .message {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .message.success {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .message.error {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Sistema de Asistencia CPFP N°6</h1>
+            <p>Panel de Administración</p>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="name" id="userName">Cargando...</div>
+                <div class="role">Administrador</div>
+            </div>
+            <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('courses')">Cursos</button>
+            <button class="nav-tab" onclick="switchTab('students')">Alumnos</button>
+            <button class="nav-tab" onclick="switchTab('users')">Usuarios</button>
+        </div>
+    </nav>
+    
+    <main>
+        <!-- Tab: Cursos -->
+        <div id="tab-courses" class="tab-content active">
+            <div class="section">
+                <h2>Gestión de Cursos</h2>
+                <button class="btn-primary" onclick="openCourseModal()">Nuevo Curso</button>
+                <div id="coursesMessage"></div>
+                <table id="coursesTable">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Profesor</th>
+                            <th>Alumnos</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Tab: Alumnos -->
+        <div id="tab-students" class="tab-content">
+            <div class="section">
+                <h2>Gestión de Alumnos</h2>
+                <div class="form-row">
+                    <div>
+                        <label>Seleccionar Curso</label>
+                        <select id="studentCourseSelect" onchange="loadStudents()">
+                            <option value="">-- Seleccione un curso --</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openStudentModal()" id="btnNewStudent" disabled>Nuevo Alumno</button>
+                <div id="studentsMessage"></div>
+                <table id="studentsTable">
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>DNI</th>
+                            <th>Curso</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Tab: Usuarios -->
+        <div id="tab-users" class="tab-content">
+            <div class="section">
+                <h2>Gestión de Usuarios</h2>
+                <button class="btn-primary" onclick="openUserModal()">Nuevo Usuario</button>
+                <div id="usersMessage"></div>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre Completo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal para Curso -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="courseModalTitle">Nuevo Curso</h2>
+                <button class="close-modal" onclick="closeCourseModal()">&times;</button>
+            </div>
+            <form id="courseForm">
+                <input type="hidden" id="courseId">
+                <div class="form-row">
+                    <div>
+                        <label>Nombre del Curso *</label>
+                        <input type="text" id="courseName" required>
+                    </div>
+                    <div>
+                        <label>Código</label>
+                        <input type="text" id="courseCode">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label>Profesor</label>
+                        <select id="courseTeacher">
+                            <option value="">-- Sin asignar --</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" class="btn-secondary" onclick="closeCourseModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal para Alumno -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="studentModalTitle">Nuevo Alumno</h2>
+                <button class="close-modal" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <form id="studentForm">
+                <input type="hidden" id="studentId">
+                <div class="form-row">
+                    <div>
+                        <label>Nombre Completo *</label>
+                        <input type="text" id="studentName" required>
+                    </div>
+                    <div>
+                        <label>DNI</label>
+                        <input type="text" id="studentDni">
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" class="btn-secondary" onclick="closeStudentModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal para Usuario -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nuevo Usuario</h2>
+                <button class="close-modal" onclick="closeUserModal()">&times;</button>
+            </div>
+            <form id="userForm">
+                <div class="form-row">
+                    <div>
+                        <label>Usuario *</label>
+                        <input type="text" id="userUsername" required>
+                    </div>
+                    <div>
+                        <label>Contraseña *</label>
+                        <input type="password" id="userPassword" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div>
+                        <label>Nombre Completo *</label>
+                        <input type="text" id="userFullName" required>
+                    </div>
+                    <div>
+                        <label>Rol *</label>
+                        <select id="userRole" required>
+                            <option value="profesor">Profesor</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" class="btn-secondary" onclick="closeUserModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
+
