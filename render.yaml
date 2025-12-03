@@ -15,10 +15,6 @@ services:
         sync: false
       - key: NEXTAUTH_SECRET
         sync: false
-      - key: GOOGLE_CLIENT_ID
-        sync: false
-      - key: GOOGLE_CLIENT_SECRET
-        sync: false
       - key: GOOGLE_SHEETS_SPREADSHEET_ID
         sync: false
       - key: GOOGLE_SERVICE_ACCOUNT_EMAIL

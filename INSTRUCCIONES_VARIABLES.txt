@@ -1,0 +1,34 @@
+═══════════════════════════════════════════════════════════════
+  SOLUCIÓN RÁPIDA: Agregar Variables de Entorno en Render
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA:
+❌ Variables de entorno faltantes: NEXTAUTH_SECRET, etc.
+
+SOLUCIÓN (5 minutos):
+
+1. Ve a https://dashboard.render.com
+2. Abre tu servicio
+3. Click en "Environment" (menú lateral)
+4. Agrega estas 8 variables:
+
+   NODE_ENV = production
+   NEXTAUTH_URL = https://asistencia2-4e76.onrender.com
+   NEXTAUTH_SECRET = (genera con: openssl rand -base64 32)
+   GOOGLE_CLIENT_ID = (de Google Cloud)
+   GOOGLE_CLIENT_SECRET = (de Google Cloud)
+   GOOGLE_SHEETS_SPREADSHEET_ID = (ID del Sheet)
+   GOOGLE_SERVICE_ACCOUNT_EMAIL = (email del service account)
+   GOOGLE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+
+5. Settings → Build & Deploy
+   Build Command: npm ci && npm run build
+   Start Command: npm start
+   Save Changes
+
+6. Events → Manual Deploy
+
+ESO ES TODO. Espera 3-5 minutos.
+
+═══════════════════════════════════════════════════════════════
+
