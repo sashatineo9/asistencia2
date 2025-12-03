@@ -1,264 +1,188 @@
-# Sistema Integral de Gestión de Asistencia CPFP N°6
+# 🎓 Asistencias CPFP N°6
 
-Sistema web multiplataforma para optimizar la carga de asistencia de alumnos del CPFP N°6, desarrollado con metodologías ágiles y herramientas tecnológicas modernas.
+Sistema de gestión de asistencias para CPFP N°6. Mini-campus virtual simple, cute y 100% funcional desde internet.
 
-## 📋 Características
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8)
 
-- ✅ **Autenticación segura** con roles diferenciados (Profesor/Administrador)
-- ✅ **Gestión completa de cursos** y alumnos
-- ✅ **Carga de asistencia diaria** por parte de profesores
-- ✅ **Panel de administración** para gestión integral
-- ✅ **Base de datos persistente** (SQLite para desarrollo, compatible con PostgreSQL)
-- ✅ **Interfaz responsive** accesible desde cualquier dispositivo
-- ✅ **API REST** bien estructurada
+## ✨ Características
 
-## 🏗️ Arquitectura
+- 🔐 **Autenticación con Google** usando NextAuth
+- 📚 **Gestión completa de cursos** (crear, editar, eliminar)
+- 👥 **Gestión de alumnos** por curso
+- ✅ **Toma de asistencia** con interfaz intuitiva
+- 📅 **Calendario visual** de asistencias
+- 📊 **Reportes detallados** con estadísticas y exportación a CSV
+- 💾 **Persistencia en Google Sheets** (sin necesidad de base de datos tradicional)
+- 🎨 **Diseño cute y minimalista** con colores pastel
+- 📱 **Responsive** - funciona en cualquier dispositivo
 
-### Backend
-- **Framework**: Flask (Python)
-- **Base de Datos**: SQLAlchemy ORM (SQLite/PostgreSQL)
-- **Autenticación**: JWT (JSON Web Tokens)
-- **API**: RESTful
+## 🚀 Inicio Rápido
 
-### Frontend
-- **Tecnología**: HTML5, CSS3, JavaScript (Vanilla)
-- **Diseño**: Responsive, accesible desde móviles, tablets y desktop
+### Opción 1: Setup Local (Recomendado para empezar)
+
+Sigue la **[Guía de Setup Rápida](SETUP.md)** - Te llevará paso a paso en menos de 15 minutos.
+
+### Opción 2: Deploy Directo
+
+Si ya tienes todo configurado, sigue la **[Guía de Deploy](DEPLOY.md)** para subirlo a Render.
+
+## 📋 Requisitos Previos
+
+- ✅ Node.js 18+ y npm
+- ✅ Cuenta de Google (para OAuth)
+- ✅ Cuenta de Google Cloud Platform (gratis)
+- ✅ Cuenta en Render (gratis, para deploy)
+
+## 🛠️ Tecnologías
+
+- **Frontend**: Next.js 14 (App Router) + TypeScript
+- **Estilos**: TailwindCSS
+- **Autenticación**: NextAuth.js con Google OAuth
+- **Base de Datos**: Google Sheets API v4
+- **Estado Global**: Zustand
+- **Animaciones**: Framer Motion
+- **Iconos**: Lucide React
+- **Deploy**: Render + GitHub
 
 ## 📁 Estructura del Proyecto
 
 ```
 asistencia2/
-├── backend.py              # API principal con Flask
-├── models.py               # Modelos de base de datos (SQLAlchemy)
-├── requirements.txt        # Dependencias de Python
-├── login.html             # Página de inicio de sesión
-├── dashboard_profesor.html # Panel del profesor
-├── dashboard_admin.html    # Panel del administrador
-├── admin.js               # Lógica JavaScript para administrador
-├── index.html             # Redirección al login
-├── .env.example           # Ejemplo de variables de entorno
-├── render.yaml            # Configuración para Render
-├── Procfile               # Configuración para despliegue
-├── .gitignore             # Archivos a ignorar en Git
-└── README.md              # Este archivo
+├── app/                    # Páginas y rutas
+│   ├── api/                # API Routes
+│   ├── calendar/           # Calendario de asistencias
+│   ├── course/[id]/        # Gestión de curso
+│   ├── dashboard/          # Dashboard principal
+│   └── login/              # Página de login
+├── components/             # Componentes React
+├── lib/                    # Utilidades y configuraciones
+│   ├── auth.ts             # Configuración NextAuth
+│   └── googleSheets.ts     # Integración Google Sheets
+├── store/                  # Estado global (Zustand)
+├── types/                  # Tipos TypeScript
+├── SETUP.md                # Guía de setup detallada
+├── DEPLOY.md               # Guía de deploy
+└── README.md               # Este archivo
 ```
 
-## 🚀 Instalación y Configuración
+## 📖 Documentación
 
-### Requisitos Previos
+- **[SETUP.md](SETUP.md)** - Guía paso a paso para configurar el proyecto localmente
+- **[DEPLOY.md](DEPLOY.md)** - Guía completa para desplegar en Render
+- **[env.example.txt](env.example.txt)** - Ejemplo de variables de entorno
 
-- Python 3.8 o superior
-- pip (gestor de paquetes de Python)
-- Git (para control de versiones)
+## 🎯 Funcionalidades Principales
 
-### Instalación Local
+### 1. Autenticación
+- Login seguro con Google OAuth
+- Sesión persistente
+- Protección de rutas
 
-1. **Clonar o descargar el proyecto**
+### 2. Gestión de Cursos
+- Crear nuevos cursos
+- Editar información de cursos
+- Eliminar cursos (con confirmación)
+- Ver lista de todos los cursos
 
-2. **Crear entorno virtual (recomendado)**
-   ```bash
-   python -m venv venv
-   ```
+### 3. Gestión de Alumnos
+- Agregar alumnos a un curso
+- Eliminar alumnos
+- Ver lista de alumnos por curso
 
-3. **Activar entorno virtual**
-   
-   En Windows (PowerShell):
-   ```powershell
-   .\venv\Scripts\Activate.ps1
-   ```
-   
-   En Linux/Mac:
-   ```bash
-   source venv/bin/activate
-   ```
+### 4. Toma de Asistencia
+- Seleccionar fecha
+- Marcar alumnos como Presente/Ausente
+- Guardar asistencia en Google Sheets
+- Ver asistencias guardadas anteriormente
 
-4. **Instalar dependencias**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 5. Calendario
+- Vista mensual de asistencias
+- Días con asistencia marcados
+- Estadísticas del mes
+- Navegación entre meses
 
-5. **Configurar variables de entorno**
-   
-   Copiar el archivo de ejemplo:
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Editar `.env` y configurar:
-   - `DATABASE_URL`: URL de la base de datos (por defecto SQLite)
-   - `JWT_SECRET_KEY`: Clave secreta para JWT (cambiar en producción)
+### 6. Reportes
+- Porcentaje de asistencia por alumno
+- Ranking de asistencias
+- Estadísticas generales
+- Exportación a CSV
 
-6. **Inicializar base de datos**
-   
-   La base de datos se crea automáticamente al ejecutar el servidor por primera vez.
-   Se creará un usuario administrador por defecto:
-   - **Usuario**: `admin`
-   - **Contraseña**: `admin123`
+## 🔧 Scripts Disponibles
 
-7. **Ejecutar el servidor**
-   ```bash
-   python backend.py
-   ```
-   
-   El servidor estará disponible en `http://localhost:5000`
+```bash
+# Desarrollo
+npm run dev          # Inicia servidor de desarrollo (http://localhost:3000)
 
-8. **Abrir la aplicación**
-   
-   Abrir `login.html` en el navegador o acceder a `http://localhost:5000` si se configura el servidor para servir archivos estáticos.
+# Producción
+npm run build        # Construye la aplicación
+npm start            # Inicia servidor de producción
 
-## 👥 Usuarios y Roles
+# Utilidades
+npm run lint         # Ejecuta el linter
+```
 
-### Administrador
-- Gestión completa de cursos
-- Gestión de alumnos
-- Creación y gestión de usuarios
-- Acceso a todos los cursos
+## 🐛 Solución de Problemas
 
-### Profesor
-- Visualización de cursos asignados
-- Carga de asistencia diaria
-- Consulta de reportes de asistencia
+### Error: "No autorizado" al acceder a Google Sheets
+- ✅ Verifica que el Sheet esté compartido con el service account
+- ✅ Verifica que `GOOGLE_SERVICE_ACCOUNT_EMAIL` sea correcto
+- ✅ Verifica que el service account tenga permisos de Editor
 
-## 🔐 Credenciales por Defecto
+### Error: "Invalid credentials" en NextAuth
+- ✅ Verifica que las URLs de redirección estén correctas en Google Cloud
+- ✅ Verifica que `GOOGLE_CLIENT_ID` y `GOOGLE_CLIENT_SECRET` sean correctos
+- ✅ Verifica que `NEXTAUTH_URL` coincida con tu dominio
 
-Al iniciar el sistema por primera vez, se crea automáticamente un usuario administrador:
+### Error: "Spreadsheet not found"
+- ✅ Verifica que `GOOGLE_SHEETS_SPREADSHEET_ID` sea correcto
+- ✅ Verifica que el Sheet esté compartido con el service account
+- ✅ Verifica que las APIs estén habilitadas en Google Cloud
 
-- **Usuario**: `admin`
-- **Contraseña**: `admin123`
+### El build falla en Render
+- ✅ Verifica que todas las variables de entorno estén configuradas
+- ✅ Revisa los logs de build en Render para más detalles
+- ✅ Asegúrate de que `package.json` tenga todas las dependencias
 
-**⚠️ IMPORTANTE**: Cambiar estas credenciales en producción.
+## 📝 Notas Importantes
 
-## 📡 API Endpoints
+- 🔒 El sistema crea automáticamente las hojas necesarias en Google Sheets
+- 💾 Los datos se almacenan directamente en Google Sheets (no hay base de datos tradicional)
+- 👥 El sistema es multi-usuario: cada profesor puede gestionar sus propios cursos
+- 📅 Las asistencias se guardan con la fecha y el nombre del profesor que las tomó
+- ⚠️ Al eliminar un curso, se eliminan también todos los alumnos y asistencias asociadas
 
-### Autenticación
-- `POST /api/auth/login` - Iniciar sesión
-- `GET /api/auth/me` - Obtener usuario actual
+## 🎨 Personalización
 
-### Cursos
-- `GET /api/courses` - Listar cursos
-- `POST /api/courses` - Crear curso (solo admin)
-- `GET /api/courses/<id>` - Obtener curso
-- `PUT /api/courses/<id>` - Actualizar curso (solo admin)
-- `DELETE /api/courses/<id>` - Eliminar curso (solo admin)
+### Colores
 
-### Alumnos
-- `GET /api/courses/<id>/students` - Listar alumnos de un curso
-- `POST /api/courses/<id>/students` - Agregar alumno (solo admin)
-- `PUT /api/students/<id>` - Actualizar alumno (solo admin)
-- `DELETE /api/students/<id>` - Eliminar alumno (solo admin)
+Los colores se pueden personalizar en `tailwind.config.ts`:
 
-### Asistencia
-- `GET /api/courses/<id>/attendance/<fecha>` - Obtener asistencia
-- `POST /api/courses/<id>/attendance/<fecha>` - Guardar asistencia
-- `GET /api/courses/<id>/attendance/report` - Reporte de asistencia
+```typescript
+colors: {
+  pastel: {
+    pink: '#FFD6E8',
+    blue: '#D6E8FF',
+    purple: '#E8D6FF',
+    // ... más colores
+  }
+}
+```
 
-### Usuarios
-- `GET /api/users` - Listar usuarios (solo admin)
-- `POST /api/users` - Crear usuario (solo admin)
+### Estilos
 
-## 🌐 Despliegue en la Nube
+Los estilos globales están en `app/globals.css`. Puedes modificar las clases utilitarias como `.btn-primary`, `.card`, etc.
 
-### Despliegue en Render
+## 🔄 Actualizaciones
 
-1. **Crear cuenta en Render** (https://render.com)
+Para actualizar el proyecto:
 
-2. **Conectar repositorio de GitHub**
-   - Subir el código a GitHub
-   - Conectar el repositorio en Render
-
-3. **Crear servicio Web**
-   - Tipo: Web Service
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `gunicorn --bind 0.0.0.0:$PORT backend:app`
-
-4. **Configurar variables de entorno**
-   - `DATABASE_URL`: URL de base de datos (Render PostgreSQL o externa)
-   - `JWT_SECRET_KEY`: Clave secreta segura
-   - `FLASK_ENV`: `production`
-
-5. **Desplegar**
-
-### Base de Datos en Google Cloud SQL
-
-Para usar Google Cloud SQL con Render, sigue estos pasos:
-
-1. **Crear instancia de Cloud SQL** (PostgreSQL)
-   - Consulta la guía completa en [GOOGLE_CLOUD_SETUP.md](GOOGLE_CLOUD_SETUP.md)
-   - Configura usuario, contraseña y base de datos
-   - Habilita conexiones públicas o privadas según tu necesidad
-
-2. **Obtener la Connection String**
-   - Formato: `postgresql://usuario:contraseña@host:puerto/nombre_bd`
-   - Ejemplo: `postgresql://asistencia_user:password@34.123.45.67:5432/asistencia`
-
-3. **Configurar en Render**
-   - Ve a tu servicio en Render
-   - Agrega la variable de entorno `DATABASE_URL` con la connection string
-   - Reinicia el servicio
-
-📖 **Guía detallada**: Ver [GOOGLE_CLOUD_SETUP.md](GOOGLE_CLOUD_SETUP.md) para instrucciones paso a paso.
-
-### Base de Datos en Producción
-
-Para producción, se recomienda usar PostgreSQL:
-
-1. **Instalar psycopg2** (driver de PostgreSQL)
-   ```bash
-   pip install psycopg2-binary
-   ```
-
-2. **El `requirements.txt` ya incluye**:
-   ```
-   psycopg2-binary==2.9.9
-   ```
-
-3. **Configurar `DATABASE_URL`** con formato:
-   ```
-   postgresql://usuario:contraseña@host:puerto/nombre_bd
-   ```
-
-## 🧪 Pruebas
-
-### Pruebas Manuales
-
-1. **Autenticación**
-   - Iniciar sesión con credenciales válidas
-   - Verificar redirección según rol
-   - Probar credenciales inválidas
-
-2. **Gestión de Cursos (Admin)**
-   - Crear nuevo curso
-   - Asignar profesor
-   - Editar curso
-   - Eliminar curso
-
-3. **Gestión de Alumnos (Admin)**
-   - Agregar alumnos a un curso
-   - Editar información de alumnos
-   - Eliminar alumnos
-
-4. **Carga de Asistencia (Profesor)**
-   - Seleccionar curso
-   - Cargar asistencia del día
-   - Guardar cambios
-
-## 📝 Metodología de Trabajo
-
-Este proyecto utiliza metodología **Kanban** para la gestión del flujo de trabajo:
-
-- **Visualización**: Tablero con columnas (Por hacer, En progreso, Completado)
-- **Límites de trabajo**: Controlar tareas en progreso
-- **Flujo continuo**: Enfoque en completar tareas de forma continua
-- **Mejora continua**: Retrospectivas y ajustes
-
-## 🛠️ Tecnologías Utilizadas
-
-- **Backend**: Flask, SQLAlchemy, Flask-JWT-Extended
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Base de Datos**: SQLite (desarrollo) / PostgreSQL (producción)
-- **Despliegue**: Render, Google Cloud Platform
-- **Control de Versiones**: Git, GitHub
-- **IA Asistente**: Gemini/Cursor
+```bash
+git pull origin main
+npm install
+npm run build
+```
 
 ## 📄 Licencia
 
@@ -266,27 +190,30 @@ Este proyecto es parte de una práctica profesionalizante del CPFP N°6.
 
 ## 👨‍💻 Desarrollo
 
-### Estructura de Base de Datos
-
-- **users**: Usuarios del sistema (profesores y administradores)
-- **courses**: Cursos
-- **students**: Alumnos
-- **attendances**: Registros de asistencia diaria
-
 ### Próximas Mejoras
 
-- [ ] Exportación de reportes a PDF/Excel
+- [ ] Importar alumnos desde CSV
 - [ ] Notificaciones por email
-- [ ] Dashboard con estadísticas
+- [ ] Dashboard con gráficos
 - [ ] Historial de cambios
-- [ ] Recuperación de contraseña
-- [ ] Integración con sistemas externos
+- [ ] Exportación a PDF
+- [ ] Modo oscuro
+- [ ] Búsqueda de alumnos
+- [ ] Filtros avanzados en reportes
 
 ## 📞 Soporte
 
-Para consultas o problemas, contactar al equipo de desarrollo del CPFP N°6.
+Si tienes problemas:
+
+1. Revisa la [Guía de Setup](SETUP.md)
+2. Revisa la [Guía de Deploy](DEPLOY.md)
+3. Revisa la sección de "Solución de Problemas" arriba
+4. Revisa los logs en la consola del navegador (F12)
+5. Revisa los logs en Render Dashboard (si está desplegado)
 
 ---
 
 **Versión**: 1.0.0  
 **Última actualización**: 2025
+
+**Desarrollado con ❤️ para CPFP N°6**

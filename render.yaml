@@ -1,16 +1,24 @@
 services:
   - type: web
-    name: asistencia-backend
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --bind 0.0.0.0:$PORT backend:app
+    name: asistencias-cpfp-6
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
     envVars:
-      - key: DATABASE_URL
-        sync: false
-      - key: JWT_SECRET_KEY
-        generateValue: true
-      - key: PORT
-        value: 10000
-      - key: FLASK_ENV
+      - key: NODE_ENV
         value: production
-
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: NEXTAUTH_SECRET
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_SHEETS_SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_EMAIL
+        sync: false
+      - key: GOOGLE_PRIVATE_KEY
+        sync: false
