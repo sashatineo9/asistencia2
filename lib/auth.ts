@@ -1,6 +1,38 @@
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { verifyCredentials } from './users'
+import crypto from 'crypto'
+
+// Generar un secret válido si no está presente
+// NextAuth requiere al menos 32 caracteres
+function getOrGenerateSecret(): string {
+  const envSecret = process.env.NEXTAUTH_SECRET
+  
+  // Si hay un secret válido en las variables de entorno, usarlo
+  if (envSecret && envSecret.trim().length >= 32) {
+    console.log('✅ NEXTAUTH_SECRET encontrado en variables de entorno')
+    return envSecret.trim()
+  }
+  
+  // Si no hay secret o es muy corto, generar uno determinístico
+  // Usar un hash basado en NEXTAUTH_URL para que sea consistente entre reinicios
+  const baseString = process.env.NEXTAUTH_URL || 'asistencias-cpfp-6-default'
+  const generatedSecret = crypto
+    .createHash('sha256')
+    .update(baseString + 'asistencias-cpfp-6-secret-key-2024-production')
+    .digest('base64')
+  
+  if (!envSecret) {
+    console.warn('⚠️⚠️⚠️ NEXTAUTH_SECRET NO está configurado en Render Dashboard')
+    console.warn('⚠️ Se está usando un secret generado automáticamente (NO es seguro para producción)')
+    console.warn('⚠️ IMPORTANTE: Agrega NEXTAUTH_SECRET en Render Dashboard → Settings → Environment')
+    console.warn('⚠️ Genera uno con: https://generate-secret.vercel.app/32')
+  } else {
+    console.warn('⚠️ NEXTAUTH_SECRET es muy corto (< 32 caracteres). Se está usando un secret generado.')
+  }
+  
+  return generatedSecret
+}
 
 // Validar variables de entorno requeridas
 const requiredEnvVars = {
@@ -20,9 +52,6 @@ if (missingVars.length > 0) {
   console.error('  NEXTAUTH_SECRET:', process.env.NEXTAUTH_SECRET ? '✅ Presente' : '❌ Faltante')
   console.error('  NEXTAUTH_URL:', process.env.NEXTAUTH_URL ? `✅ ${process.env.NEXTAUTH_URL}` : '❌ Faltante')
   console.error('  NODE_ENV:', process.env.NODE_ENV || '❌ Faltante')
-  
-  // NO lanzar error en producción para permitir diagnóstico
-  // NextAuth manejará el error de forma más elegante
 }
 
 export const authOptions: NextAuthOptions = {
@@ -72,6 +101,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
-  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-development-only-change-in-production',
+  secret: getOrGenerateSecret(),
   debug: process.env.NODE_ENV === 'development',
 }

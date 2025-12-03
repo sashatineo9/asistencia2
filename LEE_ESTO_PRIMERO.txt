@@ -1,0 +1,41 @@
+═══════════════════════════════════════════════════════════════
+  ⚠️ LEE ESTO PRIMERO - SOLUCIÓN AL ERROR NO_SECRET
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA:
+El error [next-auth][error][NO_SECRET] significa que Render NO está
+leyendo la variable NEXTAUTH_SECRET.
+
+SOLUCIÓN RÁPIDA (3 pasos):
+
+1. GENERA UN SECRET:
+   Abre: https://generate-secret.vercel.app/32
+   Copia el resultado completo
+
+2. AGREGAR EN RENDER:
+   - Ve a: https://dashboard.render.com
+   - Tu Servicio → Settings → Environment
+   - Click "Add Environment Variable"
+   - Key: NEXTAUTH_SECRET
+   - Value: (pega el secret)
+   - Save
+
+3. HACER DEPLOY:
+   - Events → Manual Deploy → Deploy latest commit
+
+═══════════════════════════════════════════════════════════════
+
+IMPORTANTE:
+✓ El nombre debe ser EXACTAMENTE: NEXTAUTH_SECRET
+✓ Sin espacios, sin comillas
+✓ Debes hacer click en "Save"
+✓ Debes hacer un nuevo deploy
+
+═══════════════════════════════════════════════════════════════
+
+DOCUMENTOS DETALLADOS:
+- COMO_AGREGAR_SECRET_RENDER.md (guía completa con pasos)
+- SOLUCION_INMEDIATA_SECRET.txt (resumen rápido)
+
+═══════════════════════════════════════════════════════════════
+
