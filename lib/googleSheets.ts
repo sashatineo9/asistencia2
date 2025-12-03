@@ -7,14 +7,28 @@ let sheets: any = null
 function getSheetsClient() {
   if (sheets) return sheets
 
-  const auth = new JWT({
-    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  })
+  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY
 
-  sheets = google.sheets({ version: 'v4', auth })
-  return sheets
+  if (!email || !privateKey) {
+    throw new Error(
+      'Google Sheets credentials not configured. Please set GOOGLE_SERVICE_ACCOUNT_EMAIL and GOOGLE_PRIVATE_KEY environment variables.'
+    )
+  }
+
+  try {
+    const auth = new JWT({
+      email: email,
+      key: privateKey.replace(/\\n/g, '\n'),
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    })
+
+    sheets = google.sheets({ version: 'v4', auth })
+    return sheets
+  } catch (error) {
+    console.error('Error initializing Google Sheets client:', error)
+    throw new Error('Failed to initialize Google Sheets client. Check your credentials.')
+  }
 }
 
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID || ''

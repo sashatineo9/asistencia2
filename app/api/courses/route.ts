@@ -12,9 +12,15 @@ export async function GET() {
 
     const courses = await getCourses()
     return NextResponse.json(courses)
-  } catch (error) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: 'Error al obtener cursos' }, { status: 500 })
+  } catch (error: any) {
+    console.error('Error en GET /api/courses:', error)
+    return NextResponse.json(
+      { 
+        error: 'Error al obtener cursos',
+        message: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
+      { status: 500 }
+    )
   }
 }
 
