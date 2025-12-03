@@ -1,0 +1,33 @@
+═══════════════════════════════════════════════════════════════
+  RESUMEN URGENTE: Configurar Render Dashboard
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA:
+- Render usa "yarn start" (debe ser "npm start")
+- Falta NEXTAUTH_SECRET
+
+SOLUCIÓN (3 pasos):
+
+1. Render Dashboard → Tu Servicio → Settings → Build & Deploy
+   Build Command: npm install && npm run build
+   Start Command: npm start
+   Save Changes
+
+2. Settings → Environment
+   AGREGA estas 6 variables:
+   - NODE_ENV = production
+   - NEXTAUTH_URL = https://asistencia2-4e76.onrender.com
+   - NEXTAUTH_SECRET = (genera con PowerShell o online)
+   - GOOGLE_SHEETS_SPREADSHEET_ID = (tu sheet ID)
+   - GOOGLE_SERVICE_ACCOUNT_EMAIL = (email del service account)
+   - GOOGLE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+
+3. Events → Manual Deploy
+
+GENERAR NEXTAUTH_SECRET:
+- PowerShell: [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes([System.Guid]::NewGuid().ToString() + [System.Guid]::NewGuid().ToString()))
+- Online: https://generate-secret.vercel.app/32
+- Node.js: node generar-secret.js
+
+═══════════════════════════════════════════════════════════════
+

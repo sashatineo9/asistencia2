@@ -1,0 +1,40 @@
+═══════════════════════════════════════════════════════════════
+  PASOS INMEDIATOS - Si ya cambiaste Render y no funciona
+═══════════════════════════════════════════════════════════════
+
+1. HAZ COMMIT Y PUSH DE LOS CAMBIOS
+   - git add .
+   - git commit -m "Agregar página de diagnóstico"
+   - git push
+
+2. ESPERA A QUE RENDER HAGA DEPLOY AUTOMÁTICO
+   (o haz Manual Deploy)
+
+3. VE A LA PÁGINA DE DIAGNÓSTICO
+   https://asistencia2-4e76.onrender.com/debug
+   
+   Esta página te mostrará EXACTAMENTE qué variables están
+   configuradas en Render.
+
+4. COMPARA CON LO QUE DEBERÍAS TENER:
+   ✅ NODE_ENV = production
+   ✅ NEXTAUTH_URL = https://asistencia2-4e76.onrender.com
+   ✅ NEXTAUTH_SECRET = (debe tener valor)
+   ✅ GOOGLE_SHEETS_SPREADSHEET_ID = (debe tener valor)
+   ✅ GOOGLE_SERVICE_ACCOUNT_EMAIL = (debe tener valor)
+   ✅ GOOGLE_PRIVATE_KEY = (debe tener valor)
+
+5. SI FALTA ALGUNA VARIABLE:
+   - Ve a Render Dashboard
+   - Settings → Environment
+   - Agrega la variable faltante
+   - Guarda y haz nuevo deploy
+
+6. VERIFICA LOS LOGS EN RENDER:
+   - Debe decir: "==> Running 'npm install'"
+   - Debe decir: "==> Running 'npm run build'"
+   - Debe decir: "==> Running 'npm start'"
+   - NO debe decir: "==> Running 'yarn start'"
+
+═══════════════════════════════════════════════════════════════
+

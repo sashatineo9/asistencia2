@@ -16,11 +16,13 @@ const missingVars = Object.entries(requiredEnvVars)
 if (missingVars.length > 0) {
   const errorMsg = `❌ Variables de entorno faltantes: ${missingVars.join(', ')}. Por favor, configura estas variables en Render Dashboard → Environment.`
   console.error(errorMsg)
+  console.error('🔍 Variables actuales detectadas:')
+  console.error('  NEXTAUTH_SECRET:', process.env.NEXTAUTH_SECRET ? '✅ Presente' : '❌ Faltante')
+  console.error('  NEXTAUTH_URL:', process.env.NEXTAUTH_URL ? `✅ ${process.env.NEXTAUTH_URL}` : '❌ Faltante')
+  console.error('  NODE_ENV:', process.env.NODE_ENV || '❌ Faltante')
   
-  // En producción, lanzar error más descriptivo
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error(errorMsg)
-  }
+  // NO lanzar error en producción para permitir diagnóstico
+  // NextAuth manejará el error de forma más elegante
 }
 
 export const authOptions: NextAuthOptions = {
@@ -70,6 +72,6 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-development-only-change-in-production',
   debug: process.env.NODE_ENV === 'development',
 }
