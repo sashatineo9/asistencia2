@@ -2,9 +2,12 @@ services:
   - type: web
     name: asistencias-cpfp-6
     env: node
-    buildCommand: npm install && npm run build
+    region: oregon
+    buildCommand: npm ci && npm run build
     startCommand: npm start
     plan: free
+    healthCheckPath: /
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production

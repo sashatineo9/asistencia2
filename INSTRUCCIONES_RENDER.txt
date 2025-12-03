@@ -1,0 +1,23 @@
+═══════════════════════════════════════════════════════════════
+  SOLUCIÓN RÁPIDA: Error "gunicorn app:app" en Render
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA:
+Render está ejecutando Python en lugar de Node.js
+
+SOLUCIÓN (5 minutos):
+
+1. Ve a https://dashboard.render.com
+2. Haz clic en tu servicio "asistencias-cpfp-6"
+3. Haz clic en "Settings" (Configuración) en el menú lateral
+4. Busca "Runtime" o "Environment"
+5. CÁMBIALO de "Python" a "Node"
+6. Busca "Build Command" y pon: npm install && npm run build
+7. Busca "Start Command" y pon: npm start
+8. Haz clic en "Save Changes"
+9. Ve a "Events" y haz clic en "Manual Deploy"
+
+ESO ES TODO. Espera 5-10 minutos y debería funcionar.
+
+═══════════════════════════════════════════════════════════════
+

@@ -57,3 +57,17 @@ dashboard_admin.html
 dashboard_profesor.html
 login.html
 index.html
+
+# Archivos que confunden a Render
+Procfile
+requirements.txt
+app.yaml
+*.pyc
+__pycache__/
+venv/
+.env
+
+# Yarn (usamos npm)
+yarn.lock
+.pnp.*
+.yarn/*
