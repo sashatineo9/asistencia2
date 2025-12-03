@@ -7,7 +7,7 @@ Render está usando `yarn` y el build no se ejecuta correctamente antes de `star
 ## ✅ Solución Aplicada
 
 1. **Actualizado `render.yaml`**:
-   - Build Command: `npm ci && npm run build` (usa npm, no yarn)
+   - Build Command: `npm install && npm run build` (usa npm, no yarn)
    - Start Command: `npm start`
 
 2. **Agregado `.npmrc`**:
@@ -28,14 +28,14 @@ Render está usando `yarn` y el build no se ejecuta correctamente antes de `star
    - Render detectará automáticamente `render.yaml`
    - O configura manualmente:
      - **Runtime**: `Node`
-     - **Build Command**: `npm ci && npm run build`
+     - **Build Command**: `npm install && npm run build`
      - **Start Command**: `npm start`
 
 ### Opción 2: Cambiar Configuración Existente
 
 1. Ve a tu servicio en Render Dashboard
 2. Settings → **Build & Deploy**
-3. **Build Command**: `npm ci && npm run build`
+3. **Build Command**: `npm install && npm run build`
 4. **Start Command**: `npm start`
 5. **Save Changes**
 6. **Manual Deploy** → Deploy latest commit
@@ -45,7 +45,7 @@ Render está usando `yarn` y el build no se ejecuta correctamente antes de `star
 Los logs deberían mostrar:
 ```
 ==> Installing Node version...
-==> Running 'npm ci'
+==> Running 'npm install'
 ==> Running 'npm run build'
 ==> Build completed
 ==> Running 'npm start'
@@ -66,7 +66,7 @@ Los logs deberían mostrar:
    ```
 
 2. **En Render Dashboard**, asegúrate de que:
-   - Build Command: `npm ci && npm run build`
+   - Build Command: `npm install && npm run build`
    - Start Command: `npm start`
    - NO uses `yarn` en ningún comando
 

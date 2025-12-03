@@ -72,7 +72,7 @@ Haz clic en **Add Environment Variable** y agrega cada una:
 
 1. Ve a **Settings** → **Build & Deploy**
 2. Busca **Build Command**
-3. Cámbialo a: `npm ci && npm run build`
+3. Cámbialo a: `npm install && npm run build`
 4. Busca **Start Command**
 5. Cámbialo a: `npm start`
 6. Haz clic en **Save Changes**
@@ -87,7 +87,7 @@ Haz clic en **Add Environment Variable** y agrega cada una:
 
 Después del deploy, los logs deberían mostrar:
 ```
-==> Running 'npm ci'
+==> Running 'npm install'
 ==> Running 'npm run build'
 ==> Running 'npm start'
 ✓ Ready in X.Xs

@@ -32,7 +32,7 @@ Los logs muestran:
 ### Paso 2: Cambiar de Yarn a NPM
 
 1. En Settings, busca la sección **Build & Deploy**
-2. **Build Command**: Cámbialo a `npm ci && npm run build`
+2. **Build Command**: Cámbialo a `npm install && npm run build`
 3. **Start Command**: Cámbialo a `npm start`
 4. Haz clic en **Save Changes**
 
@@ -95,7 +95,7 @@ Si ves estas variables, **ELIMÍNALAS** (ya no se necesitan):
 
 Después del deploy, los logs deberían mostrar:
 ```
-==> Running 'npm ci'
+==> Running 'npm install'
 ==> Running 'npm run build'
 ==> Running 'npm start'
 ✓ Ready in X.Xs
@@ -110,7 +110,7 @@ Después del deploy, los logs deberían mostrar:
 
 ## 📋 Checklist Final
 
-- [ ] Build Command cambiado a: `npm ci && npm run build`
+- [ ] Build Command cambiado a: `npm install && npm run build`
 - [ ] Start Command cambiado a: `npm start`
 - [ ] `NODE_ENV` = `production`
 - [ ] `NEXTAUTH_URL` = Tu URL exacta de Render
